@@ -1,5 +1,5 @@
 # Welcome to Goverment Benefits Prediction
-Before we start we must install python3.
+Before we start we must install python.
 ## installing
 #### Macosx
 ````

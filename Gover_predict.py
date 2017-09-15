@@ -54,8 +54,5 @@ Dframe2_predict = about_t.DataFrame({'Date':year_set2.values})
 Dframe2_predict['Date_ordinal'] = Dframe2_predict['Date'].apply(lambda x:x.toordinal())
 future = Dframe2_predict[['Date_ordinal']]
 Dframe2_val = about_t.DataFrame({'Date':year_set2.values,'Value':model.predict(future)})
-x = Dframe2_predict[['Date_ordinal']]
-y = np.asarray(Dframe2_val['Value'])
-model.fit(x,y)
 mt.plot(year_list+year_set2.tolist(),TH_profit+Dframe2_val['Value'].tolist())
 mt.show()

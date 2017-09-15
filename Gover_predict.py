@@ -6,7 +6,6 @@ import warnings
 warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
 
 
-
 TH_profit =[ 422895.4,
              474547.3,
              534195.09,
@@ -34,7 +33,6 @@ TH_profit =[ 422895.4,
              2174749.757,
              2386463.61,
              2457860.173 ]
-
 #เอาข้อมูลมา plotเป็นกราฟเทียบกับแต่ละปี
 year_set = about_t.date_range('1990','2017',freq='A')
 year_list = year_set.tolist()
@@ -43,15 +41,21 @@ year_list = year_set.tolist()
 Dframe = about_t.DataFrame({'Date': year_set.values,'Value':TH_profit})
 Dframe['Date_ordinal'] = Dframe['Date'].apply(lambda x:x.toordinal())
 
+model = LinearRegression()
+x = Dframe[['Date_ordinal']]
+y = np.asarray(Dframe['Value'])
+model.fit(x,y)
+
 #ลองpredict10ปีข้างหน้า
-model = LinearRegression() #Choose your Algorithm
 year_set2 = about_t.date_range('2018',periods=10,freq='A')
 year2_list = year_set2.tolist()
 
 Dframe2_predict = about_t.DataFrame({'Date':year_set2.values})
 Dframe2_predict['Date_ordinal'] = Dframe2_predict['Date'].apply(lambda x:x.toordinal())
-future_Date = Dframe2_predict[['Date_ordinal']]
-Dframe2_val = about_t.DataFrame({'Date':year_set2.values,'Value':model.predict(future_Date)})
-model.fit(future_Date,model.predict(future_Date))
+future = Dframe2_predict[['Date_ordinal']]
+Dframe2_val = about_t.DataFrame({'Date':year_set2.values,'Value':model.predict(future)})
+x = Dframe2_predict[['Date_ordinal']]
+y = np.asarray(Dframe2_val['Value'])
+model.fit(x,y)
 mt.plot(year_list+year_set2.tolist(),TH_profit+Dframe2_val['Value'].tolist())
 mt.show()

@@ -33,6 +33,7 @@ TH_profit =[ 422895.4,
              2174749.757,
              2386463.61,
              2457860.173 ]
+mt.figure(figsize=(9,9))
 #เอาข้อมูลมา plotเป็นกราฟเทียบกับแต่ละปี
 year_set = about_t.date_range('1990','2017',freq='A')
 year_list = year_set.tolist()
@@ -54,5 +55,8 @@ Dframe2_predict = about_t.DataFrame({'Date':year_set2.values})
 Dframe2_predict['Date_ordinal'] = Dframe2_predict['Date'].apply(lambda x:x.toordinal())
 future = Dframe2_predict[['Date_ordinal']]
 Dframe2_val = about_t.DataFrame({'Date':year_set2.values,'Value':model.predict(future)})
-mt.plot(year_list+year_set2.tolist(),TH_profit+Dframe2_val['Value'].tolist())
+mt.plot(year_set2.tolist(),Dframe2_val['Value'].tolist())
+
+mt.xlabel("Years")
+mt.ylabel("Income(Bath)")
 mt.show()
